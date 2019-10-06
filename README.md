@@ -1,8 +1,5 @@
 # Amazon Elastic Container Service for Kubernetes - EKS
 
-[![Build Status](https://travis-ci.org/punkerside/terraform-aws-template-eks.svg?branch=master)](https://travis-ci.org/punkerside/terraform-aws-template-eks)
-[![GitHub Issues](https://img.shields.io/github/issues/punkerside/terraform-aws-template-eks.svg)](https://github.com/punkerside/terraform-aws-template-eks/issues)
-[![GitHub Tag](https://img.shields.io/github/tag-date/punkerside/terraform-aws-template-eks.svg?style=plastic)](https://github.com/punkerside/terraform-aws-template-eks/tags/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ![IMAGE](docs/img/eks_base.png)
