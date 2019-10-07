@@ -48,14 +48,14 @@ Para desplegar toda la infraestructura necesaria de una forma rapida podemos eje
 make quickstart AWS_REGION=us-west-2 NODE_VER=1.13
 ```
 
-* GuestBook
+* **GuestBook**
 
 http://guestbook.punkerside.com
 
-* Web UI (Dashboard)
+* **Web UI (Dashboard)**
 
 ```bash
-# optener token
+# obtener token
 sh scripts/eks-admin.sh
 # iniciar dashboard
 kubectl proxy
