@@ -1,3 +1,33 @@
+resource "aws_iam_role" "notification" {
+  name = "${var.owner}-${var.env}-${var.project}-notification"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "autoscaling.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+  tags = {
+      owner   = "${var.owner}"
+      project = "${var.project}"
+      env     = "${var.env}"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "notification_00" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AutoScalingNotificationAccessRole"
+  role       = "${aws_iam_role.notification.name}"
+}
+
 resource "aws_iam_role" "node" {
   name = "${var.owner}-${var.env}-${var.project}-node"
 
@@ -210,4 +240,19 @@ resource "aws_autoscaling_group" "this" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_autoscaling_notification" "this" {
+  group_names = [
+    "${aws_autoscaling_group.this.name}"
+  ]
+
+  notifications = [
+    "autoscaling:EC2_INSTANCE_LAUNCH",
+    "autoscaling:EC2_INSTANCE_TERMINATE",
+    "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+    "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
+  ]
+
+  topic_arn = "${aws_sns_topic.this.arn}"
 }

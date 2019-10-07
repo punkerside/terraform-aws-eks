@@ -6,7 +6,7 @@ AWS_REGION = us-east-1
 AWS_DOMAIN = punkerside.com
 
 NODE_VER = 1.14
-NODE_DES = 3
+NODE_DES = 2
 NODE_MIN = 1
 NODE_MAX = 10
 
@@ -25,6 +25,11 @@ apply:
 	  -var 'node_min=$(NODE_MIN)' \
 	  -var 'node_max=$(NODE_MAX)' \
 	-auto-approve
+	@make subscribe
+
+subscribe:
+	$(eval AWS_SNS_TOPIC = $(shell cd terraform/ && terraform output aws_sns_topic))
+	@aws sns --region $(AWS_REGION) subscribe --topic-arn $(AWS_SNS_TOPIC) --protocol email --notification-endpoint ivan.echegaray@outlook.com
 
 kubeconfig:
 	$(eval NODE_ROLE = $(shell cd terraform/ && terraform output role))
@@ -46,7 +51,8 @@ addon-ingress:
 	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/aws/patch-configmap-l7.yaml
 
 addon-autoscaler:
-	@kubectl apply -f scripts/cluster-autoscaler-autodiscover.yaml
+	$(eval AWS_AUTOSCALING_GROUP = $(shell cd terraform/ && terraform output aws_autoscaling_group))
+	@export AWS_AUTOSCALING_GROUP=$(AWS_AUTOSCALING_GROUP) && envsubst < scripts/cluster-autoscaler-autodiscover.yaml | kubectl apply -f -
 
 addon-cloudwatch:
 	@curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/master/k8s-yaml-templates/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/$(OWNER)-$(ENV)/;s/{{region_name}}/$(AWS_REGION)/" | kubectl apply -f -
@@ -62,11 +68,6 @@ deploy-guestbook:
 	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/examples/master/guestbook-go/guestbook-controller.json
 	@kubectl apply -f guestbook/service.json
 	@export AWS_DOMAIN=$(AWS_DOMAIN) && envsubst < guestbook/ingress.yaml | kubectl apply -f -
-
-deploy-stress:
-	@kubectl apply -f stress/service.yaml
-	@kubectl apply -f stress/hpa.yaml
-	@export AWS_DOMAIN=$(AWS_DOMAIN) && envsubst < stress/ingress.yaml | kubectl apply -f -
 
 quickstart:
 	@make init
@@ -95,6 +96,7 @@ destroy:
 	  -var 'node_min=$(NODE_MIN)' \
 	  -var 'node_max=$(NODE_MAX)' \
 	-auto-approve
+	@sh scripts/delete-dns.sh $(AWS_REGION) $(AWS_DOMAIN)
 
 tmps:
 	@rm -rf terraform/.terraform.tfstate.lock.info

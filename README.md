@@ -2,21 +2,17 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-![IMAGE](docs/img/eks_base.png)
+![IMAGE](docs/img/architecture.png)
 
-Kubernetes es un software de código abierto que le permite implementar y administrar aplicaciones en contenedores a escala. Kubernetes administra clústeres de instancias de informática de Amazon EC2 y ejecuta contenedores en ellas con procesos destinados a implementación, mantenimiento y escalado. Con Kubernetes puede ejecutar cualquier tipo de aplicación en contenedor mediante el uso del mismo conjunto de herramientas para entornos en las instalaciones y en la nube.
-
-AWS facilita la ejecución de Kubernetes en la nube mediante una infraestructura de máquinas virtuales escalable y de alta disponibilidad, integraciones en servicios respaldadas por la comunidad y Amazon Elastic Container Service for Kubernetes (EKS), un servicio administrado de Kubernetes que cuenta con certificación de conformidad.
+Kubernetes es un software de código abierto que le permite implementar y administrar aplicaciones en contenedores a escala. Kubernetes administra clústeres de instancias de informática de Amazon EC2 y ejecuta contenedores en ellas con procesos destinados a implementación, mantenimiento y escalado.
 
 ## Prerequisite
 
-Se debe tener en cuenta que es necesario configurar las credenciales en el servicio [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/configure/).
 
 * [Instalar Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
 * [Instalar AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-* Crear bucket S3 con el siguiente formato: **owner**-prod-terraform
 
-**NOTA:** Al crear el bucket **"owner"** debe ser cambiado por el nombre del cliente.
+**NOTA:** Configurar las credenciales en el servicio [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/configure/).
 
 Como depedencia se necesita una infraestructura base debidamente etiquetada para poder detectar automaticamente los distintos componentes de red. Para esto podemos seguir la siguiente plantilla de VPC:
 
@@ -24,12 +20,25 @@ Como depedencia se necesita una infraestructura base debidamente etiquetada para
 
 ## Recursos desplegados
 
-Esta plantilla de Terraform, despliega los siguientes recursos:
+### Amazon AWS
 
-* Amazon Elastic Container Service for Kubernetes (EKS)
-* Amazon EC2 [Spot Instances](https://aws.amazon.com/es/ec2/spot/)
-* Amazon EC2 Auto Scaling
-* Amazon Identity and Access Management (IAM)
+* Elastic Container Service for Kubernetes (EKS)
+* EC2 [Spot Instances](https://aws.amazon.com/es/ec2/spot/)
+* EC2 Auto Scaling
+* Elastic Load Balancing (ELB)
+* Identity and Access Management (IAM)
+* CloudWatch Container Insights
+* Certificate Manager
+* Simple Notification Service
+* Route 53
+
+### Kubernetes
+
+* Web UI (Dashboard)
+* Metrics Server
+* Cluster Autoscaler (CA)
+* NGINX Ingress Controller
+* GuestBook (app demo)
 
 ## Inicio rápido
 
@@ -57,7 +66,7 @@ Para validar el funcionamiento de los servicios demo y del Nginx Ingress se debe
 
 ## Inicio personalizado
 
-Para desplegar toda la infraestructura:
+Desplegar infraestructura cloud y complementos Kubernetes:
 
 ```bash
 make quickstart WORKER_SIZE=2 AWS_REGION=us-west-2
@@ -65,16 +74,24 @@ make quickstart WORKER_SIZE=2 AWS_REGION=us-west-2
 
 ## Variables
 
+
+NODE_VER = 1.14
+NODE_DES = 2
+NODE_MIN = 1
+NODE_MAX = 10
+
+
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| OWNER | Propietario | string | punkerside | no |
-| PROJECT | Proyecto | string | vpc | no |
-| ENV | Entorno | string | lab | no |
+| OWNER | Nombre del propietario | string | punkerside | no |
+| PROJECT | Nombre del proyecto | string | eks | no |
+| ENV | Nombre del entorno | string | demo | no |
 | AWS_REGION | Region de AWS | string | `us-east-1` | no |
-| DNS_DOMAIN | Nombre de DNS | string | `punkerside.com` | no |
-| WORKER_TYPE | Tipo de instancia | string | `m5.large` | no |
-| WORKER_PRICE | Precio maximo a pagar por instancia | string | `0.045` | no |
-| WORKER_SIZE | Numero de workers | `1` | no |
+| AWS_DOMAIN | Dominio de DNS | string | `punkerside.com` | no |
+| NODE_VER | Version de Kubernetes | string | `1.14` | no |
+| NODE_DES | Numero de nodos | string | `2` | no |
+| NODE_MIN | Numero minimo de nodos para el escalamiento| string | `2` | no |
+| NODE_MAX | Numero minimo de nodos para el escalamiento| string | `2` | no |
 
 ## Eliminar
 
