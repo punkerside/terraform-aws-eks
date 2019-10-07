@@ -48,7 +48,20 @@ Para desplegar toda la infraestructura necesaria de una forma rapida podemos eje
 make quickstart AWS_REGION=us-west-2 NODE_VER=1.13
 ```
 
-* http://guestbook.punkerside.com
+* GuestBook
+
+http://guestbook.punkerside.com
+
+* Web UI (Dashboard)
+
+```bash
+# optener token
+sh scripts/eks-admin.sh
+# iniciar dashboard
+kubectl proxy
+```
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
 
 ## Variables
 
@@ -61,8 +74,8 @@ make quickstart AWS_REGION=us-west-2 NODE_VER=1.13
 | AWS_DOMAIN | Dominio de DNS | string | `punkerside.com` | no |
 | NODE_VER | Version de Kubernetes | string | `1.14` | no |
 | NODE_DES | Numero de nodos | string | `2` | no |
-| NODE_MIN | Numero minimo de nodos para el escalamiento| string | `2` | no |
-| NODE_MAX | Numero minimo de nodos para el escalamiento| string | `2` | no |
+| NODE_MIN | Numero minimo de nodos para el escalamiento| string | `1` | no |
+| NODE_MAX | Numero minimo de nodos para el escalamiento| string | `10` | no |
 
 ## Eliminar
 
