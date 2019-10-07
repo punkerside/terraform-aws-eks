@@ -45,41 +45,12 @@ Como depedencia se necesita una infraestructura base debidamente etiquetada para
 Para desplegar toda la infraestructura necesaria de una forma rapida podemos ejecutar:
 
 ```bash
-make quickstart
+make quickstart AWS_REGION=us-west-2 NODE_VER=1.13
 ```
 
-* Descarga de modulos y binarios de Terraform.
-* Despliegue de infraestructura.
-* Configurar kubectl y workers contra el cluster EKS.
-* Instalar Dashboard.
-* Instalar Nginx Ingress.
-
-![IMAGE](docs/img/eks_ingress.png)
-
-* Configurar DNS del Nginx Ingress.
-* Desplegar contenedores demo.
-
-Para validar el funcionamiento de los servicios demo y del Nginx Ingress se deben realizar las siguientes consultas web:
-
-* http://eks.punkerside.com/coffee
-* http://eks.punkerside.com/tea
-
-## Inicio personalizado
-
-Desplegar infraestructura cloud y complementos Kubernetes:
-
-```bash
-make quickstart WORKER_SIZE=2 AWS_REGION=us-west-2
-```
+* http://guestbook.punkerside.com
 
 ## Variables
-
-
-NODE_VER = 1.14
-NODE_DES = 2
-NODE_MIN = 1
-NODE_MAX = 10
-
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
