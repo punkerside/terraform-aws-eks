@@ -1,86 +1,53 @@
-# Amazon Elastic Container Service for Kubernetes - EKS
+# Terraform Module - EKS
 
+[![Open Source Helpers](https://www.codetriage.com/punkerside/terraform-aws-eks/badges/users.svg)](https://www.codetriage.com/punkerside/terraform-aws-eks)
+[![GitHub Issues](https://img.shields.io/github/issues/punkerside/terraform-aws-eks.svg)](https://github.com/punkerside/terraform-aws-eks/issues)
+[![GitHub Tag](https://img.shields.io/github/tag-date/punkerside/terraform-aws-eks.svg?style=plastic)](https://github.com/punkerside/terraform-aws-eks/tags/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-![IMAGE](docs/img/architecture.png)
 
 Kubernetes es un software de código abierto que le permite implementar y administrar aplicaciones en contenedores a escala. Kubernetes administra clústeres de instancias de informática de Amazon EC2 y ejecuta contenedores en ellas con procesos destinados a implementación, mantenimiento y escalado.
 
-## Prerequisite
-
-
-* [Instalar Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
-* [Instalar AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-
-**NOTA:** Configurar las credenciales en el servicio [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/configure/).
-
-Como depedencia se necesita una infraestructura base debidamente etiquetada para poder detectar automaticamente los distintos componentes de red. Para esto podemos seguir la siguiente plantilla de VPC:
-
-* [Amazon Virtual Private Cloud](https://github.com/punkerside/terraform-aws-template-vpc)
-
-## Recursos desplegados
-
-### Amazon AWS
+## AWS Resources
 
 * Elastic Container Service for Kubernetes (EKS)
-* EC2 [Spot Instances](https://aws.amazon.com/es/ec2/spot/)
 * EC2 Auto Scaling
-* Elastic Load Balancing (ELB)
 * Identity and Access Management (IAM)
-* CloudWatch Container Insights
-* Certificate Manager
-* Simple Notification Service
-* Route 53
 
-### Kubernetes
+## Usage
 
-* Web UI (Dashboard)
-* Metrics Server
-* Cluster Autoscaler (CA)
-* NGINX Ingress Controller
-* GuestBook (app demo)
+```hcl
+module "vpc" {
+  source     = "punkerside/vpc/eks"
+  version    = "0.0.1"
 
-## Inicio rápido
-
-Para desplegar toda la infraestructura necesaria de una forma rapida podemos ejecutar:
-
-```bash
-make quickstart AWS_REGION=us-west-2 NODE_VER=1.13
+  project    = "falcon"
+  env        = "sandbox"
+}
 ```
 
-* **GuestBook**
+## Examples
 
-http://guestbook.punkerside.com
+* [Basic](https://github.com/punkerside/terraform-aws-eks/tree/master/examples/basic)
+* [Full](https://github.com/punkerside/terraform-aws-eks/tree/master/examples/full)
 
-* **Web UI (Dashboard)**
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-```bash
-# obtener token
-sh scripts/eks-admin.sh
-# iniciar dashboard
-kubectl proxy
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Tests
+
+1. Install [rvm](https://rvm.io/rvm/install) and the ruby version specified in the [Gemfile](https://github.com/punkerside/terraform-aws-eks/tree/master/Gemfile).
+2. Install bundler and the gems from our Gemfile:
 ```
-
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
-
-## Variables
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| OWNER | Nombre del propietario | string | punkerside | no |
-| PROJECT | Nombre del proyecto | string | eks | no |
-| ENV | Nombre del entorno | string | demo | no |
-| AWS_REGION | Region de AWS | string | `us-east-1` | no |
-| AWS_DOMAIN | Dominio de DNS | string | `punkerside.com` | no |
-| NODE_VER | Version de Kubernetes | string | `1.14` | no |
-| NODE_DES | Numero de nodos | string | `2` | no |
-| NODE_MIN | Numero minimo de nodos para el escalamiento| string | `1` | no |
-| NODE_MAX | Numero minimo de nodos para el escalamiento| string | `10` | no |
-
-## Eliminar
-
-Para eliminar la infraestructura creada y archivos temporales:
-
-```bash
-make delete
+gem install bundler
+bundle install
 ```
+3. Test using `bundle exec kitchen test` from the root of the repo.
+
+## Authors
+
+The module is maintained by [Ivan Echegaray](https://github.com/punkerside)
+
+## License
+
+Apache 2 Licensed. See LICENSE for full details.
