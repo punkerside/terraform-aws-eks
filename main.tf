@@ -16,9 +16,11 @@ resource "aws_iam_role" "this" {
   ]
 }
 EOF
+
   tags = {
-      project = "${var.project}"
-      env     = "${var.env}"
+    Name    = "${var.project}-${var.env}"
+    Project = var.project
+    Env     = var.env
   }
 }
 
@@ -48,9 +50,15 @@ resource "aws_eks_cluster" "this" {
   version  = var.eks_version
 
   vpc_config {
-    subnet_ids = concat(sort(var.subnet_private_ids),sort(var.subnet_public_ids),)
-    endpoint_private_access = false
-    endpoint_public_access  = true
+    subnet_ids              = concat(sort(var.subnet_private_ids), sort(var.subnet_public_ids), )
+    endpoint_private_access = var.endpoint_private_access
+    endpoint_public_access  = var.endpoint_public_access
+  }
+
+  tags = {
+    Name    = "${var.project}-${var.env}"
+    Project = var.project
+    Env     = var.env
   }
 
   depends_on = [
@@ -75,8 +83,9 @@ resource "aws_eks_node_group" "this" {
   }
 
   tags = {
-      project = "${var.project}"
-      env     = "${var.env}"
+    Name    = "${var.project}-${var.env}"
+    Project = var.project
+    Env     = var.env
   }
 
   depends_on = [
@@ -84,4 +93,32 @@ resource "aws_eks_node_group" "this" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
+}
+
+resource "aws_ec2_tag" "subnet_private_elb" {
+  count       = length(var.subnet_private_ids)
+  resource_id = element(var.subnet_private_ids, count.index)
+  key         = "kubernetes.io/role/internal-elb"
+  value       = "1"
+}
+
+resource "aws_ec2_tag" "subnet_private_k8s" {
+  count       = length(var.subnet_private_ids)
+  resource_id = element(var.subnet_private_ids, count.index)
+  key         = "kubernetes.io/cluster/${var.project}-${var.env}"
+  value       = "shared"
+}
+
+resource "aws_ec2_tag" "subnet_public_elb" {
+  count       = length(var.subnet_public_ids)
+  resource_id = element(var.subnet_public_ids, count.index)
+  key         = "kubernetes.io/role/elb"
+  value       = "1"
+}
+
+resource "aws_ec2_tag" "subnet_public_k8s" {
+  count       = length(var.subnet_public_ids)
+  resource_id = element(var.subnet_public_ids, count.index)
+  key         = "kubernetes.io/cluster/${var.project}-${var.env}"
+  value       = "shared"
 }

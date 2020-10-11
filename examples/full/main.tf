@@ -11,8 +11,8 @@ module "vpc" {
 }
 
 module "eks" {
-  source               = "punkerside/vpc/eks"
-  version              = "0.0.1"
+  source  = "punkerside/vpc/eks"
+  version = "0.0.1"
 
   project              = "falcon"
   env                  = "sandbox"

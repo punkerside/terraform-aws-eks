@@ -1,4 +1,4 @@
-output "name" {
-  description = "Nombre de cluster EKS"
+output "values" {
+  description = "Values of EKS"
   value       = module.eks.values.name
 }

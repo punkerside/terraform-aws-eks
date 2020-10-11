@@ -1,13 +1,11 @@
 variable "project" {
-  description = "Project's name"
+  description = "Project name"
   type        = string
-  default     = "falcon"
 }
 
 variable "env" {
   description = "Environment name"
   type        = string
-  default     = "sandbox"
 }
 
 variable "eks_version" {
@@ -66,4 +64,16 @@ variable "subnet_private_ids" {
 variable "subnet_public_ids" {
   description = "Ids of subnets public"
   type        = list(string)
+}
+
+variable "endpoint_private_access" {
+  description = "Endpoint private access"
+  type        = bool
+  default     = false
+}
+
+variable "endpoint_public_access" {
+  description = "Endpoint public access"
+  type        = bool
+  default     = true
 }

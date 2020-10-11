@@ -5,14 +5,6 @@
 [![GitHub Tag](https://img.shields.io/github/tag-date/punkerside/terraform-aws-eks.svg?style=plastic)](https://github.com/punkerside/terraform-aws-eks/tags/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Kubernetes es un software de código abierto que le permite implementar y administrar aplicaciones en contenedores a escala. Kubernetes administra clústeres de instancias de informática de Amazon EC2 y ejecuta contenedores en ellas con procesos destinados a implementación, mantenimiento y escalado.
-
-## AWS Resources
-
-* Elastic Container Service for Kubernetes (EKS)
-* EC2 Auto Scaling
-* Identity and Access Management (IAM)
-
 ## Usage
 
 ```hcl
@@ -31,6 +23,41 @@ module "vpc" {
 * [Full](https://github.com/punkerside/terraform-aws-eks/tree/master/examples/full)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.13.0 |
+| aws | ~> 3.5.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | ~> 3.5.0 |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| ami\_type | Ami type of nodes | `string` | `"AL2_x86_64"` | no |
+| desired\_size | Number of nodes | `string` | `2` | no |
+| disk\_size | Disk size of nodes | `string` | `80` | no |
+| eks\_version | EKS version | `string` | `"1.17"` | no |
+| env | Environment name | `string` | `"sandbox"` | no |
+| force\_update\_version | Force update version | `bool` | `true` | no |
+| instance\_types | Instance types | `list(string)` | <pre>[<br>  "r5a.large"<br>]</pre> | no |
+| max\_size | Number max of nodes | `string` | `4` | no |
+| min\_size | Number min of nodes | `string` | `1` | no |
+| project | Project's name | `string` | `"falcon"` | no |
+| subnet\_private\_ids | Ids of subnets private | `list(string)` | n/a | yes |
+| subnet\_public\_ids | Ids of subnets public | `list(string)` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| values | EKS values |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
