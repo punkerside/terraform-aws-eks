@@ -19,8 +19,8 @@ module "vpc" {
 # dependencia
 
 module "eks" {
-  source  = "punkerside/vpc/eks"
-  version = "0.0.1"
+  source  = "punkerside/eks/aws"
+  version = "0.0.2"
 
   project            = "falcon"
   env                = "sandbox"
