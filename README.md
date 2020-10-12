@@ -20,7 +20,7 @@ module "vpc" {
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.2"
+  version = "0.0.3"
 
   project            = "falcon"
   env                = "sandbox"
