@@ -44,6 +44,11 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.this.name
 }
 
+resource "aws_iam_role_policy_attachment" "AutoScalingFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AutoScalingFullAccess"
+  role       = aws_iam_role.this.name
+}
+
 resource "aws_eks_cluster" "this" {
   name     = "${var.project}-${var.env}"
   role_arn = aws_iam_role.this.arn
