@@ -8,12 +8,24 @@
 ## Usage
 
 ```hcl
+# dependencia
 module "vpc" {
-  source     = "punkerside/vpc/eks"
-  version    = "0.0.1"
+  source  = "punkerside/vpc/aws"
+  version = "0.0.8"
 
-  project    = "falcon"
-  env        = "sandbox"
+  project = "falcon"
+  env     = "sandbox"
+}
+# dependencia
+
+module "eks" {
+  source  = "punkerside/vpc/eks"
+  version = "0.0.1"
+
+  project            = "falcon"
+  env                = "sandbox"
+  subnet_private_ids = module.vpc.subnet_private_ids
+  subnet_public_ids  = module.vpc.subnet_public_ids
 }
 ```
 
@@ -44,12 +56,14 @@ module "vpc" {
 | desired\_size | Number of nodes | `string` | `2` | no |
 | disk\_size | Disk size of nodes | `string` | `80` | no |
 | eks\_version | EKS version | `string` | `"1.17"` | no |
-| env | Environment name | `string` | `"sandbox"` | no |
+| endpoint\_private\_access | Endpoint private access | `bool` | `false` | no |
+| endpoint\_public\_access | Endpoint public access | `bool` | `true` | no |
+| env | Environment name | `string` | n/a | yes |
 | force\_update\_version | Force update version | `bool` | `true` | no |
 | instance\_types | Instance types | `list(string)` | <pre>[<br>  "r5a.large"<br>]</pre> | no |
 | max\_size | Number max of nodes | `string` | `4` | no |
 | min\_size | Number min of nodes | `string` | `1` | no |
-| project | Project's name | `string` | `"falcon"` | no |
+| project | Project name | `string` | n/a | yes |
 | subnet\_private\_ids | Ids of subnets private | `list(string)` | n/a | yes |
 | subnet\_public\_ids | Ids of subnets public | `list(string)` | n/a | yes |
 
