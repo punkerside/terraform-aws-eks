@@ -14,7 +14,7 @@ module "eks" {
   source = "../../"
 
   project            = "falcon"
-  env                = "awspec"
+  env                = "sandbox"
   subnet_private_ids = module.vpc.subnet_private_ids
   subnet_public_ids  = module.vpc.subnet_public_ids
 }
