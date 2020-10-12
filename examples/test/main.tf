@@ -7,7 +7,7 @@ module "vpc" {
   version = "0.0.8"
 
   project = "falcon"
-  env     = "sandbox"
+  env     = "awspec"
 }
 
 module "eks" {
