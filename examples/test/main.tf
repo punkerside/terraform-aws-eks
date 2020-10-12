@@ -7,14 +7,14 @@ module "vpc" {
   version = "0.0.8"
 
   project = "falcon"
-  env     = "sandbox"
+  env     = "awspec"
 }
 
 module "eks" {
   source = "../../"
 
   project            = "falcon"
-  env                = "sandbox"
+  env                = "awspec"
   subnet_private_ids = module.vpc.subnet_private_ids
   subnet_public_ids  = module.vpc.subnet_public_ids
 }
