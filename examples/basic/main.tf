@@ -14,7 +14,7 @@ module "vpc" {
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.3"
+  version = "0.0.4"
 
   project            = "falcon"
   env                = "awspec"

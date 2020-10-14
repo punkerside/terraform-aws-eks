@@ -14,11 +14,11 @@ module "vpc" {
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.3"
+  version = "0.0.4"
 
   project                 = "falcon"
   env                     = "awspec"
-  eks_version             = "1.17"
+  eks_version             = "1.18"
   desired_size            = 4
   max_size                = 10
   min_size                = 2
