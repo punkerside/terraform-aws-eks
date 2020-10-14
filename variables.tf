@@ -11,7 +11,7 @@ variable "env" {
 variable "eks_version" {
   description = "EKS version"
   type        = string
-  default     = "1.17"
+  default     = "1.18"
 }
 
 variable "desired_size" {
