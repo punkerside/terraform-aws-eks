@@ -20,7 +20,7 @@ module "vpc" {
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.3"
+  version = "0.0.4"
 
   project            = "falcon"
   env                = "sandbox"
@@ -55,7 +55,7 @@ module "eks" {
 | ami\_type | Ami type of nodes | `string` | `"AL2_x86_64"` | no |
 | desired\_size | Number of nodes | `string` | `2` | no |
 | disk\_size | Disk size of nodes | `string` | `80` | no |
-| eks\_version | EKS version | `string` | `"1.17"` | no |
+| eks\_version | EKS version | `string` | `"1.18"` | no |
 | endpoint\_private\_access | Endpoint private access | `bool` | `false` | no |
 | endpoint\_public\_access | Endpoint public access | `bool` | `true` | no |
 | env | Environment name | `string` | n/a | yes |
