@@ -61,7 +61,7 @@ module "eks" {
 | env | Environment name | `string` | n/a | yes |
 | force\_update\_version | Force update version | `bool` | `true` | no |
 | instance\_types | Instance types | `list(string)` | <pre>[<br>  "r5a.large"<br>]</pre> | no |
-| max\_size | Number max of nodes | `string` | `4` | no |
+| max\_size | Number max of nodes | `string` | `8` | no |
 | min\_size | Number min of nodes | `string` | `1` | no |
 | project | Project name | `string` | n/a | yes |
 | subnet\_private\_ids | Ids of subnets private | `list(string)` | n/a | yes |
