@@ -1,4 +1,3 @@
-output "values" {
-  description = "Values of EKS"
-  value       = module.eks.values.name
+output "name" {
+  value = module.eks.values.id
 }

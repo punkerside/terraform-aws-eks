@@ -20,10 +20,8 @@ module "vpc" {
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.4"
+  version = "0.0.5"
 
-  project            = "falcon"
-  env                = "sandbox"
   subnet_private_ids = module.vpc.subnet_private_ids
   subnet_public_ids  = module.vpc.subnet_public_ids
 }
@@ -39,40 +37,61 @@ module "eks" {
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.13.0 |
-| aws | ~> 3.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.19 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.55.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.1.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_ec2_tag.subnet_private_elb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) | resource |
+| [aws_ec2_tag.subnet_public_elb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) | resource |
+| [aws_eks_cluster.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster) | resource |
+| [aws_eks_node_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group) | resource |
+| [aws_iam_role.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.AmazonEC2RoleforSSM](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.AmazonEKSClusterPolicy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.AutoScalingFullAccess](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [random_string.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| ami\_type | Ami type of nodes | `string` | `"AL2_x86_64"` | no |
-| desired\_size | Number of nodes | `string` | `2` | no |
-| disk\_size | Disk size of nodes | `string` | `80` | no |
-| eks\_version | EKS version | `string` | `"1.18"` | no |
-| endpoint\_private\_access | Endpoint private access | `bool` | `false` | no |
-| endpoint\_public\_access | Endpoint public access | `bool` | `true` | no |
-| env | Environment name | `string` | n/a | yes |
-| force\_update\_version | Force update version | `bool` | `true` | no |
-| instance\_types | Instance types | `list(string)` | <pre>[<br>  "r5a.large"<br>]</pre> | no |
-| max\_size | Number max of nodes | `string` | `8` | no |
-| min\_size | Number min of nodes | `string` | `1` | no |
-| project | Project name | `string` | n/a | yes |
-| subnet\_private\_ids | Ids of subnets private | `list(string)` | n/a | yes |
-| subnet\_public\_ids | Ids of subnets public | `list(string)` | n/a | yes |
+| <a name="input_ami_type"></a> [ami\_type](#input\_ami\_type) | Tipo de AMI de los nodos | `string` | `"AL2_x86_64"` | no |
+| <a name="input_desired_size"></a> [desired\_size](#input\_desired\_size) | Numero deseado de nodos | `string` | `2` | no |
+| <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Tamaño de disco asociado a los nodos | `string` | `80` | no |
+| <a name="input_eks_version"></a> [eks\_version](#input\_eks\_version) | Version de Kubernetes | `string` | `"1.21"` | no |
+| <a name="input_endpoint_private_access"></a> [endpoint\_private\_access](#input\_endpoint\_private\_access) | Acceso privado al Control plane | `bool` | `false` | no |
+| <a name="input_endpoint_public_access"></a> [endpoint\_public\_access](#input\_endpoint\_public\_access) | Acceso publico al Control plane | `bool` | `true` | no |
+| <a name="input_force_update_version"></a> [force\_update\_version](#input\_force\_update\_version) | Actualizacion automatica de la version de Kubernetes | `bool` | `false` | no |
+| <a name="input_instance_types"></a> [instance\_types](#input\_instance\_types) | Tipo de instancia de los nodos | `list(string)` | <pre>[<br>  "r5a.large"<br>]</pre> | no |
+| <a name="input_max_size"></a> [max\_size](#input\_max\_size) | Numero maximo de nodos | `string` | `8` | no |
+| <a name="input_min_size"></a> [min\_size](#input\_min\_size) | Numero minimo de nodos | `string` | `1` | no |
+| <a name="input_name"></a> [name](#input\_name) | Nombre asignado a todos los recursos creados por esta plantilla. | `string` | `null` | no |
+| <a name="input_subnet_private_ids"></a> [subnet\_private\_ids](#input\_subnet\_private\_ids) | Ids de redes privadas | `list(string)` | n/a | yes |
+| <a name="input_subnet_public_ids"></a> [subnet\_public\_ids](#input\_subnet\_public\_ids) | Ids de redes publicas | `list(string)` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | Etiquetas asignadas a todos los recursos creados por esta plantilla. | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| values | EKS values |
-
+| <a name="output_values"></a> [values](#output\_values) | EKS values |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Tests
