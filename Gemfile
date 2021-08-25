@@ -1,4 +1,4 @@
-ruby '2.6.7'
+ruby '2.6.8'
 
 source 'https://rubygems.org/' do
   gem 'aws-sdk', '>=3.0.1'
