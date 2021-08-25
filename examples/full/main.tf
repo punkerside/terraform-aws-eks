@@ -5,10 +5,7 @@ provider "aws" {
 # dependencia
 module "vpc" {
   source  = "punkerside/vpc/aws"
-  version = "0.0.8"
-
-  project = "falcon"
-  env     = "sandbox"
+  version = "0.0.9"
 }
 # dependencia
 
@@ -16,8 +13,8 @@ module "eks" {
   source  = "punkerside/eks/aws"
   version = "0.0.5"
 
-  name                    = "falcon-dev"
-  eks_version             = "1.18"
+  name                    = "falcon"
+  eks_version             = "1.21"
   desired_size            = 4
   max_size                = 10
   min_size                = 2

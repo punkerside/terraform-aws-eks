@@ -8,15 +8,10 @@
 ## Usage
 
 ```hcl
-# dependencia
 module "vpc" {
   source  = "punkerside/vpc/aws"
-  version = "0.0.8"
-
-  project = "falcon"
-  env     = "sandbox"
+  version = "0.0.9"
 }
-# dependencia
 
 module "eks" {
   source  = "punkerside/eks/aws"
