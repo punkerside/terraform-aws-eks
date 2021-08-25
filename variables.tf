@@ -1,79 +1,81 @@
-variable "project" {
-  description = "Project name"
+variable "name" {
+  description = "Nombre asignado a todos los recursos creados por esta plantilla."
   type        = string
-}
-
-variable "env" {
-  description = "Environment name"
-  type        = string
+  default     = null
 }
 
 variable "eks_version" {
-  description = "EKS version"
+  description = "Version de Kubernetes"
   type        = string
-  default     = "1.18"
+  default     = "1.21"
 }
 
 variable "desired_size" {
-  description = "Number of nodes"
+  description = "Numero deseado de nodos"
   type        = string
   default     = 2
 }
 
 variable "max_size" {
-  description = "Number max of nodes"
+  description = "Numero maximo de nodos"
   type        = string
   default     = 8
 }
 
 variable "min_size" {
-  description = "Number min of nodes"
+  description = "Numero minimo de nodos"
   type        = string
   default     = 1
 }
 
 variable "instance_types" {
-  description = "Instance types"
+  description = "Tipo de instancia de los nodos"
   type        = list(string)
   default     = ["r5a.large"]
 }
 
 variable "force_update_version" {
-  description = "Force update version"
+  description = "Actualizacion automatica de la version de Kubernetes"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "disk_size" {
-  description = "Disk size of nodes"
+  description = "Tamaño de disco asociado a los nodos"
   type        = string
   default     = 80
 }
 
 variable "ami_type" {
-  description = "Ami type of nodes"
+  description = "Tipo de AMI de los nodos"
   type        = string
   default     = "AL2_x86_64"
 }
 
 variable "subnet_private_ids" {
-  description = "Ids of subnets private"
+  description = "Ids de redes privadas"
   type        = list(string)
 }
 
 variable "subnet_public_ids" {
-  description = "Ids of subnets public"
+  description = "Ids de redes publicas"
   type        = list(string)
 }
 
 variable "endpoint_private_access" {
-  description = "Endpoint private access"
+  description = "Acceso privado al Control plane"
   type        = bool
   default     = false
 }
 
 variable "endpoint_public_access" {
-  description = "Endpoint public access"
+  description = "Acceso publico al Control plane"
   type        = bool
   default     = true
+}
+
+variable "tags" {
+  description = "Etiquetas asignadas a todos los recursos creados por esta plantilla."
+  type        = map(string)
+  default     = {}
 }
