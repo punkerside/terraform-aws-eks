@@ -1,3 +1,3 @@
-output "name" {
-  value = module.eks.values.id
-}
+# output "name" {
+#   value = module.eks.main.id
+# }

@@ -7,7 +7,7 @@ variable "name" {
 variable "eks_version" {
   description = "Version de Kubernetes"
   type        = string
-  default     = "1.21"
+  default     = "1.25"
 }
 
 variable "desired_size" {
@@ -19,7 +19,7 @@ variable "desired_size" {
 variable "max_size" {
   description = "Numero maximo de nodos"
   type        = string
-  default     = 8
+  default     = 4
 }
 
 variable "min_size" {
@@ -43,7 +43,7 @@ variable "force_update_version" {
 variable "disk_size" {
   description = "Tamaño de disco asociado a los nodos"
   type        = string
-  default     = 80
+  default     = 120
 }
 
 variable "ami_type" {

@@ -1,5 +1,5 @@
-resource "aws_iam_role" "this" {
-  name = var.name == null ? random_string.this.result : var.name
+resource "aws_iam_role" "main" {
+  name = var.name == null ? random_string.main.result : var.name
   tags = var.tags
 
   assume_role_policy = <<EOF
@@ -21,37 +21,37 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
 resource "aws_iam_role_policy_attachment" "AutoScalingFullAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AutoScalingFullAccess"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2RoleforSSM" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.main.name
 }
 
-resource "aws_eks_cluster" "this" {
-  name     = var.name == null ? random_string.this.result : var.name
-  role_arn = aws_iam_role.this.arn
+resource "aws_eks_cluster" "main" {
+  name     = var.name == null ? random_string.main.result : var.name
+  role_arn = aws_iam_role.main.arn
   version  = var.eks_version
   tags     = var.tags
 
@@ -68,10 +68,10 @@ resource "aws_eks_cluster" "this" {
   ]
 }
 
-resource "aws_eks_node_group" "this" {
-  cluster_name         = aws_eks_cluster.this.name
+resource "aws_eks_node_group" "main" {
+  cluster_name         = aws_eks_cluster.main.name
   node_group_name      = "default"
-  node_role_arn        = aws_iam_role.this.arn
+  node_role_arn        = aws_iam_role.main.arn
   subnet_ids           = var.subnet_private_ids
   ami_type             = var.ami_type
   disk_size            = var.disk_size
