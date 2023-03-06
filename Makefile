@@ -1,20 +1,23 @@
-AWS_REGION      = us-east-1
-BUILD_UID       = $(shell id -u)
-BUILD_GID       = $(shell id -g)
-BUILD_USERNAME  = $(shell whoami)
+SHELL = /bin/bash
 
-apply:
-	@terraform init
-	@export AWS_DEFAULT_REGION="$(AWS_REGION)" && \
-	terraform plan && terraform apply -auto-approve
+GIT_OWNER  = punkerside
+GIT_REPO   = titan-bash
+GIT_BRANCH = main
+REP_HOME   = $(shell echo "$(shell pwd | rev | cut -d "/" -f1 | rev)")
 
-destroy:
-	@export AWS_DEFAULT_REGION="$(AWS_REGION)" && \
-	terraform destroy -auto-approve
+# configurando directorio
+ifeq ($(REP_HOME),${GIT_REPO})
+GIT_HOME = $(shell echo "$(PWD)")
+else
+GIT_HOME = $(shell echo "$(PWD)/.${GIT_REPO}")
+endif
 
-precommit:
-	@echo 'USERNAME:x:USERID:GROUPID::/app:/sbin/nologin' > passwd
-	@sed -i 's/USERNAME/'$(BUILD_USERNAME)'/g' passwd
-	@sed -i 's/USERID/'$(BUILD_UID)'/g' passwd 
-	@sed -i 's/GROUPID/'$(BUILD_GID)'/g' passwd
-	@docker run --rm --network host -u $(BUILD_UID):$(BUILD_GID) -v $(PWD)/passwd:/etc/passwd:ro -v $(PWD):/app punkerside/container-precommit:latest
+init:
+	@rm -rf .${GIT_REPO}/
+	@git clone git@github.com:${GIT_OWNER}/${GIT_REPO}.git -b ${GIT_BRANCH} .${GIT_REPO}
+
+# necesario para validaciones del repositorio titan
+-include makefiles/*.mk
+
+# necesario para la carga de procesos en repositorios clientes
+-include .${GIT_REPO}/makefiles/*.mk
