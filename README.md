@@ -11,15 +11,15 @@
 ```hcl
 module "vpc" {
   source  = "punkerside/vpc/aws"
-  version = "0.0.12"
+  version = "0.0.3"
 }
 
 module "eks" {
   source  = "punkerside/eks/aws"
-  version = "0.0.6"
+  version = "0.0.1"
 
-  subnet_private_ids = module.vpc.subnet_private_ids
-  subnet_public_ids  = module.vpc.subnet_public_ids
+  subnet_private_ids = module.vpc.subnet_private_ids.*.id
+  subnet_public_ids  = module.vpc.subnet_public_ids.*.id
 }
 ```
 
