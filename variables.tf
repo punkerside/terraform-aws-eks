@@ -52,6 +52,12 @@ variable "ami_type" {
   default     = "AL2_x86_64"
 }
 
+variable "capacity_type" {
+  description = "Tipo de capacidad asociada con el grupo de nodos de EKS"
+  type        = string
+  default     = "SPOT"
+}
+
 variable "subnet_private_ids" {
   description = "Ids de redes privadas"
   type        = list(string)
