@@ -26,12 +26,12 @@ jobs:
     - name: Reusing Workflows
       uses: actions/checkout@v3
       with:
-        repository: punkerside/titan-bash
+        repository: punkerside/titan-script-core
         ref: main
-        path: .titan-bash/
+        path: .script/
 
     - name: Build
-      uses: ./.titan-bash/pipelines/module/github
+      uses: ./.script/pipelines/module/github
       with:
         DOCKERHUB_USER: ${DOCKERHUB_USER}
         DOCKERHUB_PASS: ${DOCKERHUB_PASS}
