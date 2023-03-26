@@ -19,6 +19,28 @@ resource "aws_iam_role" "main" {
 EOF
 }
 
+resource "aws_iam_role_policy" "main" {
+  name = var.name == null ? random_string.main.result : var.name
+  role = aws_iam_role.main.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:*",
+        "wafv2:*",
+        "waf-regional:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.main.name
