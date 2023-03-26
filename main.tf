@@ -74,6 +74,7 @@ resource "aws_eks_node_group" "main" {
   node_role_arn        = aws_iam_role.main.arn
   subnet_ids           = var.subnet_private_ids
   ami_type             = var.ami_type
+  capacity_type        = var.capacity_type
   disk_size            = var.disk_size
   force_update_version = var.force_update_version
   instance_types       = var.instance_types

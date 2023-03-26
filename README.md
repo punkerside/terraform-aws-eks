@@ -69,6 +69,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ami_type"></a> [ami\_type](#input\_ami\_type) | Tipo de AMI de los nodos | `string` | `"AL2_x86_64"` | no |
+| <a name="input_capacity_type"></a> [capacity\_type](#input\_capacity\_type) | Tipo de capacidad asociada con el grupo de nodos de EKS | `string` | `"SPOT"` | no |
 | <a name="input_desired_size"></a> [desired\_size](#input\_desired\_size) | Numero deseado de nodos | `string` | `2` | no |
 | <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Tamaño de disco asociado a los nodos | `string` | `120` | no |
 | <a name="input_eks_version"></a> [eks\_version](#input\_eks\_version) | Version de Kubernetes | `string` | `"1.25"` | no |
