@@ -7,7 +7,7 @@ variable "name" {
 variable "eks_version" {
   description = "Version de Kubernetes"
   type        = string
-  default     = "1.25"
+  default     = "1.27"
 }
 
 variable "desired_size" {
