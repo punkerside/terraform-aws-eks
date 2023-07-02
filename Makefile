@@ -1,5 +1,5 @@
 GIT_OWNER  = punkerside
-GIT_REPO   = titan-script-core
+GIT_REPO   = titan-core
 GIT_PATH   = script
 GIT_BRANCH = main
 REP_HOME   = $(shell echo "$(shell pwd | rev | cut -d "/" -f1 | rev)")

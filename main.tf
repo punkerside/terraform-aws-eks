@@ -71,16 +71,29 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2RoleforSSM" {
   role       = aws_iam_role.main.name
 }
 
+resource "aws_kms_key" "main" {
+  enable_key_rotation = true
+  tags                = var.tags
+}
+
 resource "aws_eks_cluster" "main" {
-  name     = var.name == null ? random_string.main.result : var.name
-  role_arn = aws_iam_role.main.arn
-  version  = var.eks_version
-  tags     = var.tags
+  name                      = var.name == null ? random_string.main.result : var.name
+  role_arn                  = aws_iam_role.main.arn
+  version                   = var.eks_version
+  enabled_cluster_log_types = var.enabled_cluster_log_types
+  tags                      = var.tags
 
   vpc_config {
     subnet_ids              = concat(sort(var.subnet_private_ids), sort(var.subnet_public_ids), )
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
+  }
+
+  encryption_config {
+    resources = ["secrets"]
+    provider {
+      key_arn = aws_kms_key.main.arn
+    }
   }
 
   depends_on = [
