@@ -3,6 +3,7 @@
 [![Build](https://github.com/punkerside/terraform-aws-eks/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/punkerside/terraform-aws-eks/actions/workflows/main.yml)
 [![Open Source Helpers](https://www.codetriage.com/punkerside/terraform-aws-eks/badges/users.svg)](https://www.codetriage.com/punkerside/terraform-aws-eks)
 [![GitHub Issues](https://img.shields.io/github/issues/punkerside/terraform-aws-eks.svg)](https://github.com/punkerside/terraform-aws-eks/issues)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=punkerside_terraform-aws-eks&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=punkerside_terraform-aws-eks)
 [![GitHub Tag](https://img.shields.io/github/tag-date/punkerside/terraform-aws-eks.svg?style=plastic)](https://github.com/punkerside/terraform-aws-eks/tags/)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/punkerside/terraform-aws-eks)
 
